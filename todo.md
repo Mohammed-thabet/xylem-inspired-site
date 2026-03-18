@@ -66,6 +66,9 @@
 - [x] Add animations and transitions
 - [x] Ensure consistent typography across site
 
+## Bug Fixes
+- [x] Fix nested anchor tag error in BlogSection and ProductsSection
+
 ## Responsive Design & Testing
 - [ ] Test on mobile devices (320px, 375px, 768px)
 - [ ] Test on tablet devices (768px, 1024px)

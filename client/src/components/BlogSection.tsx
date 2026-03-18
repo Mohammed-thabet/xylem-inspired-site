@@ -1,6 +1,5 @@
 import { trpc } from "@/lib/trpc";
-import { Link } from "wouter";
-import { ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowRight, Calendar } from "lucide-react";
 
 interface BlogSectionProps {
   language: "en" | "ar";
@@ -41,61 +40,61 @@ export default function BlogSection({ language }: BlogSectionProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {posts.length > 0 ? (
             posts.map((post, index) => (
-              <Link key={post.id} href={`/blog/${post.slug}`}>
-                <a
-                  className="group bg-background rounded-xl overflow-hidden shadow-elegant hover:shadow-elegant-lg transition-elegant animate-slide-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {/* Featured Image */}
-                  <div className="relative h-48 bg-muted overflow-hidden">
-                    {post.featuredImageUrl ? (
-                      <img
-                        src={post.featuredImageUrl}
-                        alt={language === "en" ? post.titleEn : post.titleAr}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                        <div className="text-center">
-                          <div className="w-12 h-12 bg-primary/20 rounded-full mx-auto mb-2" />
-                          <p className="text-muted-foreground text-xs">Featured Image</p>
-                        </div>
+              <div
+                key={post.id}
+                onClick={() => window.location.href = `/blog/${post.slug}`}
+                className="group bg-background rounded-xl overflow-hidden shadow-elegant hover:shadow-elegant-lg transition-elegant animate-slide-in-up cursor-pointer"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                {/* Featured Image */}
+                <div className="relative h-48 bg-muted overflow-hidden">
+                  {post.featuredImageUrl ? (
+                    <img
+                      src={post.featuredImageUrl}
+                      alt={language === "en" ? post.titleEn : post.titleAr}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="w-12 h-12 bg-primary/20 rounded-full mx-auto mb-2" />
+                        <p className="text-muted-foreground text-xs">Featured Image</p>
                       </div>
-                    )}
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
-                      {post.category}
+                    </div>
+                  )}
+                  {/* Category Badge */}
+                  <div className="absolute top-4 left-4 bg-primary text-primary-foreground px-3 py-1 rounded-full text-xs font-semibold">
+                    {post.category}
+                  </div>
+                </div>
+
+                {/* Post Info */}
+                <div className="p-6">
+                  {/* Meta Information */}
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      <span>{post.publishedAt ? formatDate(post.publishedAt) : ""}</span>
                     </div>
                   </div>
 
-                  {/* Post Info */}
-                  <div className="p-6">
-                    {/* Meta Information */}
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground mb-3">
-                      <div className="flex items-center gap-1">
-                        <Calendar className="w-3 h-3" />
-                        <span>{post.publishedAt ? formatDate(post.publishedAt) : ""}</span>
-                      </div>
-                    </div>
+                  {/* Title */}
+                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-elegant line-clamp-2">
+                    {language === "en" ? post.titleEn : post.titleAr}
+                  </h3>
 
-                    {/* Title */}
-                    <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-elegant line-clamp-2">
-                      {language === "en" ? post.titleEn : post.titleAr}
-                    </h3>
+                  {/* Excerpt */}
+                  <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                    {language === "en" ? post.excerptEn : post.excerptAr}
+                  </p>
 
-                    {/* Excerpt */}
-                    <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
-                      {language === "en" ? post.excerptEn : post.excerptAr}
-                    </p>
-
-                    {/* Read More Link */}
-                    <div className="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
-                      <span>{content.readMore}</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </div>
+                  {/* Read More Link */}
+                  <div className="flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                    <span>{content.readMore}</span>
+                    <ArrowRight className="w-4 h-4" />
                   </div>
-                </a>
-              </Link>
+                </div>
+              </div>
             ))
           ) : (
             // Placeholder blog posts
@@ -119,12 +118,13 @@ export default function BlogSection({ language }: BlogSectionProps) {
 
         {/* View All Button */}
         <div className="text-center">
-          <Link href="/blog">
-            <a className="btn-primary inline-flex items-center gap-2 group">
-              {content.viewAll}
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
-          </Link>
+          <button
+            onClick={() => window.location.href = "/blog"}
+            className="btn-primary inline-flex items-center gap-2 group"
+          >
+            {content.viewAll}
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          </button>
         </div>
       </div>
     </section>
