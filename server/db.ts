@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and, desc, like } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, markets, products, brands, productCategories, blogPosts, statistics, locations, contactSubmissions } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -89,4 +89,132 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// Markets queries
+export async function getActiveMarkets() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(markets).where(eq(markets.isActive, true)).orderBy(markets.order);
+}
+
+export async function getMarketBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(markets).where(eq(markets.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Products queries
+export async function getActiveProducts(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(products).where(eq(products.isActive, true)).orderBy(products.order);
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getProductBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(products).where(eq(products.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getProductsByCategory(categoryId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(products).where(and(eq(products.categoryId, categoryId), eq(products.isActive, true))).orderBy(products.order);
+}
+
+export async function getProductsByBrand(brandId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(products).where(and(eq(products.brandId, brandId), eq(products.isActive, true))).orderBy(products.order);
+}
+
+export async function searchProducts(query: string) {
+  const db = await getDb();
+  if (!db) return [];
+  const searchPattern = `%${query}%`;
+  return db.select().from(products).where(
+    and(
+      eq(products.isActive, true),
+      like(products.nameEn, searchPattern)
+    )
+  ).limit(20);
+}
+
+// Brands queries
+export async function getActiveBrands() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(brands).where(eq(brands.isActive, true)).orderBy(brands.order);
+}
+
+export async function getBrandBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(brands).where(eq(brands.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Product Categories queries
+export async function getActiveProductCategories() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(productCategories).where(eq(productCategories.isActive, true)).orderBy(productCategories.order);
+}
+
+// Blog Posts queries
+export async function getPublishedBlogPosts(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(blogPosts).where(eq(blogPosts.isPublished, true)).orderBy(desc(blogPosts.publishedAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getBlogPostBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getBlogPostsByCategory(category: string) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(blogPosts).where(and(eq(blogPosts.category, category), eq(blogPosts.isPublished, true))).orderBy(desc(blogPosts.publishedAt));
+}
+
+// Statistics queries
+export async function getActiveStatistics() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(statistics).where(eq(statistics.isActive, true)).orderBy(statistics.order);
+}
+
+// Locations queries
+export async function getActiveLocations() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(locations).where(eq(locations.isActive, true));
+}
+
+// Contact Submissions
+export async function createContactSubmission(data: typeof contactSubmissions.$inferInsert) {
+  const db = await getDb();
+  if (!db) throw new Error("Database not available");
+  return db.insert(contactSubmissions).values(data);
+}
+
+// Site Settings
+export async function getSiteSetting(key: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(require("../drizzle/schema").siteSettings).where(eq(require("../drizzle/schema").siteSettings.key, key)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}

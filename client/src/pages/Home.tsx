@@ -1,31 +1,40 @@
-import { useAuth } from "@/_core/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
-import { getLoginUrl } from "@/const";
-import { Streamdown } from 'streamdown';
+import { useState } from "react";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import StatisticsSection from "@/components/StatisticsSection";
+import ProductsSection from "@/components/ProductsSection";
+import BlogSection from "@/components/BlogSection";
+import Footer from "@/components/Footer";
 
-/**
- * All content in this page are only for example, replace with your own feature implementation
- * When building pages, remember your instructions in Frontend Workflow, Frontend Best Practices, Design Guide and Common Pitfalls
- */
 export default function Home() {
-  // The userAuth hooks provides authentication state
-  // To implement login/logout functionality, simply call logout() or redirect to getLoginUrl()
-  let { user, loading, error, isAuthenticated, logout } = useAuth();
+  const [language, setLanguage] = useState<"en" | "ar">("en");
 
-  // If theme is switchable in App.tsx, we can implement theme toggling like this:
-  // const { theme, toggleTheme } = useTheme();
+  const handleLanguageChange = (lang: "en" | "ar") => {
+    setLanguage(lang);
+    // Update document direction
+    document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+  };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main>
-        {/* Example: lucide-react for icons */}
-        <Loader2 className="animate-spin" />
-        Example Page
-        {/* Example: Streamdown for markdown rendering */}
-        <Streamdown>Any **markdown** content</Streamdown>
-        <Button variant="default">Example Button</Button>
-      </main>
+    <div className="w-full min-h-screen bg-background">
+      {/* Header Navigation */}
+      <Header language={language} onLanguageChange={handleLanguageChange} />
+
+      {/* Hero Section */}
+      <HeroSection language={language} />
+
+      {/* Statistics Section */}
+      <StatisticsSection language={language} />
+
+      {/* Products Section */}
+      <ProductsSection language={language} />
+
+      {/* Blog Section */}
+      <BlogSection language={language} />
+
+      {/* Footer */}
+      <Footer language={language} />
     </div>
   );
 }

@@ -1,10 +1,28 @@
 import { COOKIE_NAME } from "@shared/const";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
-import { publicProcedure, router } from "./_core/trpc";
+import { publicProcedure, router, protectedProcedure } from "./_core/trpc";
+import { z } from "zod";
+import { 
+  getActiveMarkets, 
+  getMarketBySlug, 
+  getActiveProducts, 
+  getProductBySlug, 
+  getProductsByCategory, 
+  getProductsByBrand,
+  searchProducts,
+  getActiveBrands,
+  getBrandBySlug,
+  getActiveProductCategories,
+  getPublishedBlogPosts,
+  getBlogPostBySlug,
+  getBlogPostsByCategory,
+  getActiveStatistics,
+  getActiveLocations,
+  createContactSubmission
+} from "./db";
 
 export const appRouter = router({
-    // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
@@ -17,12 +35,122 @@ export const appRouter = router({
     }),
   }),
 
-  // TODO: add feature routers here, e.g.
-  // todo: router({
-  //   list: protectedProcedure.query(({ ctx }) =>
-  //     db.getUserTodos(ctx.user.id)
-  //   ),
-  // }),
+  // Markets procedures
+  markets: router({
+    list: publicProcedure.query(async () => {
+      return getActiveMarkets();
+    }),
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return getMarketBySlug(input.slug);
+      }),
+  }),
+
+  // Products procedures
+  products: router({
+    list: publicProcedure
+      .input(z.object({ limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return getActiveProducts(input.limit);
+      }),
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return getProductBySlug(input.slug);
+      }),
+    getByCategory: publicProcedure
+      .input(z.object({ categoryId: z.number() }))
+      .query(async ({ input }) => {
+        return getProductsByCategory(input.categoryId);
+      }),
+    getByBrand: publicProcedure
+      .input(z.object({ brandId: z.number() }))
+      .query(async ({ input }) => {
+        return getProductsByBrand(input.brandId);
+      }),
+    search: publicProcedure
+      .input(z.object({ query: z.string() }))
+      .query(async ({ input }) => {
+        return searchProducts(input.query);
+      }),
+  }),
+
+  // Brands procedures
+  brands: router({
+    list: publicProcedure.query(async () => {
+      return getActiveBrands();
+    }),
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return getBrandBySlug(input.slug);
+      }),
+  }),
+
+  // Product Categories procedures
+  productCategories: router({
+    list: publicProcedure.query(async () => {
+      return getActiveProductCategories();
+    }),
+  }),
+
+  // Blog procedures
+  blog: router({
+    list: publicProcedure
+      .input(z.object({ limit: z.number().optional() }))
+      .query(async ({ input }) => {
+        return getPublishedBlogPosts(input.limit);
+      }),
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return getBlogPostBySlug(input.slug);
+      }),
+    getByCategory: publicProcedure
+      .input(z.object({ category: z.string() }))
+      .query(async ({ input }) => {
+        return getBlogPostsByCategory(input.category);
+      }),
+  }),
+
+  // Statistics procedures
+  statistics: router({
+    list: publicProcedure.query(async () => {
+      return getActiveStatistics();
+    }),
+  }),
+
+  // Locations procedures
+  locations: router({
+    list: publicProcedure.query(async () => {
+      return getActiveLocations();
+    }),
+  }),
+
+  // Contact procedures
+  contact: router({
+    submit: publicProcedure
+      .input(z.object({
+        firstName: z.string().min(1),
+        lastName: z.string().min(1),
+        email: z.string().email(),
+        phone: z.string().optional(),
+        company: z.string().optional(),
+        subject: z.string().min(1),
+        message: z.string().min(1),
+        language: z.string().default("en"),
+      }))
+      .mutation(async ({ input }) => {
+        try {
+          await createContactSubmission(input);
+          return { success: true, message: "Contact form submitted successfully" };
+        } catch (error) {
+          console.error("Contact submission error:", error);
+          throw new Error("Failed to submit contact form");
+        }
+      }),
+  }),
 });
 
 export type AppRouter = typeof appRouter;
