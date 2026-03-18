@@ -1,4 +1,11 @@
-# Xylem-Inspired Corporate Website - Project TODO
+# Water Science & Technology - Corporate Website - Project TODO
+
+## Branding & Rebranding
+- [x] Upload new logo to CDN
+- [x] Update header with new logo and company name
+- [x] Update hero section with new branding and tagline
+- [x] Update footer with new company information
+- [x] Update all UI text to reflect Water Science & Technology
 
 ## Database & Backend
 - [x] Create database schema for markets, products, brands, resources, blog posts, and statistics

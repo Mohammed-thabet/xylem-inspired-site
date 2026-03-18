@@ -8,6 +8,10 @@ interface HeaderProps {
   onLanguageChange: (lang: "en" | "ar") => void;
 }
 
+const LOGO_URL = "https://d2xsxph8kpxj0f.cloudfront.net/310519663452852665/aZuFuGh9mWovGiZpowAffj/IMG-20260318-WA0001_cbcdc45b.jpg";
+const SITE_NAME = "Water Science & Technology";
+const SITE_TAGLINE = "Engineering the Future of Water";
+
 export default function Header({ language, onLanguageChange }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
@@ -79,11 +83,16 @@ export default function Header({ language, onLanguageChange }: HeaderProps) {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/">
-            <a className="flex items-center gap-2 font-bold text-2xl gradient-text hover:opacity-80 transition-elegant">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-white font-bold">
-                X
+            <a className="flex items-center gap-3 hover:opacity-80 transition-elegant">
+              <img
+                src={LOGO_URL}
+                alt={SITE_NAME}
+                className="h-14 w-auto object-contain"
+              />
+              <div className="hidden sm:block">
+                <div className="font-bold text-sm leading-tight">{SITE_NAME}</div>
+                <div className="text-xs text-muted-foreground">{SITE_TAGLINE}</div>
               </div>
-              <span className="hidden sm:inline">Xylem</span>
             </a>
           </Link>
 

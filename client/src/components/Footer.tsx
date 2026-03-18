@@ -17,8 +17,8 @@ export default function Footer({ language }: FooterProps) {
     legal: isArabic ? "القانونية" : "Legal",
     followUs: isArabic ? "تابعنا" : "Follow Us",
     copyright: isArabic
-      ? "جميع الحقوق محفوظة © 2026 Xylem Inc."
-      : "Copyright © 2026 Xylem Inc. All Rights Reserved.",
+      ? "جميع الحقوق محفوظة © 2026 Water Science & Technology"
+      : "Copyright © 2026 Water Science & Technology. All Rights Reserved.",
     privacyPolicy: isArabic ? "سياسة الخصوصية" : "Privacy Policy",
     termsConditions: isArabic ? "الشروط والأحكام" : "Terms & Conditions",
     contactUs: isArabic ? "اتصل بنا" : "Contact Us",
@@ -58,16 +58,14 @@ export default function Footer({ language }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
           {/* Brand Section */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-primary to-accent rounded-lg flex items-center justify-center text-foreground font-bold">
-                X
-              </div>
-              <span className="font-bold text-xl">Xylem</span>
+            <div className="mb-4">
+              <span className="font-bold text-xl">Water Science & Technology</span>
+              <p className="text-xs text-background/60 mt-1">{isArabic ? "هندسة مستقبل المياه" : "Engineering the Future of Water"}</p>
             </div>
             <p className="text-background/80 text-sm mb-6">
               {isArabic
-                ? "بناء عالم أكثر أماناً للمياه من خلال الابتكار والتعاون."
-                : "Building a more water-secure world through innovation and collaboration."}
+                ? "حلول متقدمة في العلوم والتكنولوجيا لإدارة المياه المستدامة والابتكارات الرائدة في معالجة وتنقية المياه."
+                : "Advanced solutions in water science and technology for sustainable water management and leading innovations in water treatment and purification."}
             </p>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-background/80 text-sm">

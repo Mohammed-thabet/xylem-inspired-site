@@ -10,11 +10,11 @@ export default function HeroSection({ language }: HeroSectionProps) {
   const dir = isArabic ? "rtl" : "ltr";
 
   const content = {
-    title: isArabic ? "بناء عالم أكثر أماناً للمياه" : "Building a More Water-Secure World",
+    title: isArabic ? "هندسة مستقبل المياه" : "Engineering the Future of Water",
     subtitle: isArabic
-      ? "الابتكار والتعاون وربط القدرات المتنوعة والحلول والخبرة لدعم أولئك الذين يجعلون المياه تعمل كل يوم."
-      : "Innovating, collaborating and connecting diverse capabilities, solutions and know-how, to champion those who make water work every day.",
-    cta1: isArabic ? "اكتشف المزيد" : "Learn More",
+      ? "حلول متقدمة في العلوم والتكنولوجيا لإدارة المياه المستدامة والابتكارات الرائدة في معالجة وتنقية المياه"
+      : "Advanced solutions in water science and technology for sustainable water management and leading innovations in water treatment and purification",
+    cta1: isArabic ? "اكتشف الحلول" : "Discover Solutions",
     cta2: isArabic ? "اتصل بنا" : "Get in Touch",
   };
 
@@ -22,14 +22,18 @@ export default function HeroSection({ language }: HeroSectionProps) {
     <section dir={dir} className="relative w-full h-screen min-h-[600px] overflow-hidden">
       {/* Background with gradient overlay */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-secondary/80 to-accent/70 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-cyan-600/80 to-emerald-600/75 z-10" />
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage:
-              "url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=1600&h=900&fit=crop')",
+              "url('https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1600&h=900&fit=crop')",
           }}
         />
+        {/* Water droplet decorations */}
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-white/10 rounded-full blur-3xl z-0" />
+        <div className="absolute top-1/3 right-1/3 w-24 h-24 bg-cyan-300/10 rounded-full blur-2xl z-0" />
+        <div className="absolute bottom-1/4 left-1/4 w-40 h-40 bg-emerald-300/10 rounded-full blur-3xl z-0" />
       </div>
 
       {/* Content */}
@@ -37,15 +41,15 @@ export default function HeroSection({ language }: HeroSectionProps) {
         <div className="container">
           <div className="max-w-2xl">
             {/* Animated decorative line */}
-            <div className="h-1 w-20 bg-accent rounded-full mb-8 animate-slide-in-left" />
+            <div className="h-1 w-24 bg-accent rounded-full mb-8 animate-slide-in-left" />
 
             {/* Main Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-slide-in-left leading-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animate-slide-in-left leading-tight">
               {content.title}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
+            <p className="text-lg md:text-xl text-white/90 mb-8 max-w-2xl animate-slide-in-left" style={{ animationDelay: "0.1s" }}>
               {content.subtitle}
             </p>
 
