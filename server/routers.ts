@@ -10,6 +10,7 @@ import {
   getProductBySlug, 
   getProductsByCategory, 
   getProductsByBrand,
+  filterProducts,
   searchProducts,
   getActiveBrands,
   getBrandBySlug,
@@ -73,6 +74,23 @@ export const appRouter = router({
       .input(z.object({ query: z.string() }))
       .query(async ({ input }) => {
         return searchProducts(input.query);
+      }),
+    filter: publicProcedure
+      .input(z.object({
+        categoryIds: z.array(z.number()).optional(),
+        brandIds: z.array(z.number()).optional(),
+        searchQuery: z.string().optional(),
+        limit: z.number().optional(),
+        offset: z.number().optional(),
+      }))
+      .query(async ({ input }) => {
+        return filterProducts({
+          categoryIds: input.categoryIds,
+          brandIds: input.brandIds,
+          searchQuery: input.searchQuery,
+          limit: input.limit,
+          offset: input.offset,
+        });
       }),
   }),
 

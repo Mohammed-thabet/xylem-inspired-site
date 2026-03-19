@@ -1,4 +1,4 @@
-import { eq, and, desc, like } from "drizzle-orm";
+import { eq, and, desc, like, inArray, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
 import { InsertUser, users, markets, products, brands, productCategories, blogPosts, statistics, locations, contactSubmissions } from "../drizzle/schema";
 import { ENV } from './_core/env';
@@ -131,6 +131,50 @@ export async function getProductsByBrand(brandId: number) {
   const db = await getDb();
   if (!db) return [];
   return db.select().from(products).where(and(eq(products.brandId, brandId), eq(products.isActive, true))).orderBy(products.order);
+}
+
+export async function filterProducts(filters: {
+  categoryIds?: number[];
+  brandIds?: number[];
+  searchQuery?: string;
+  limit?: number;
+  offset?: number;
+}) {
+  const db = await getDb();
+  if (!db) return [];
+
+  try {
+    let whereConditions: any[] = [eq(products.isActive, true)];
+
+    if (filters.categoryIds && filters.categoryIds.length > 0) {
+      whereConditions.push(inArray(products.categoryId, filters.categoryIds));
+    }
+
+    if (filters.brandIds && filters.brandIds.length > 0) {
+      whereConditions.push(inArray(products.brandId, filters.brandIds));
+    }
+
+    if (filters.searchQuery) {
+      whereConditions.push(
+        or(
+          like(products.nameEn, `%${filters.searchQuery}%`),
+          like(products.nameAr, `%${filters.searchQuery}%`),
+          like(products.descriptionEn, `%${filters.searchQuery}%`),
+          like(products.descriptionAr, `%${filters.searchQuery}%`)
+        )
+      );
+    }
+
+    let query = db.select().from(products).where(and(...whereConditions)).orderBy(products.order);
+    
+    const limit = filters.limit || 12;
+    const offset = filters.offset || 0;
+
+    return query.limit(limit).offset(offset);
+  } catch (error) {
+    console.error("[Database] Filter products error:", error);
+    return [];
+  }
 }
 
 export async function searchProducts(query: string) {

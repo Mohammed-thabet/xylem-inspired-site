@@ -105,3 +105,15 @@
 - [ ] Documentation update
 - [x] Create project checkpoint
 - [ ] Deploy to production
+
+## Advanced Filtering Implementation
+- [x] Create Products page with filtering UI
+- [x] Implement category filter with checkbox selection
+- [x] Implement brand filter with checkbox selection
+- [x] Add sorting options (relevance, name, newest)
+- [x] Create search results page with faceted navigation
+- [x] Implement filter reset functionality
+- [x] Add filter backend procedure (products.filter)
+- [x] Write and pass 7 unit tests for filtering
+- [ ] Add filter persistence in URL parameters
+- [ ] Add filter count badges
