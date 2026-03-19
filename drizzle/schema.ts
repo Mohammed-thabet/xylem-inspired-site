@@ -183,6 +183,235 @@ export type Location = typeof locations.$inferSelect;
 export type InsertLocation = typeof locations.$inferInsert;
 
 /**
+ * Articles table - for knowledge base articles
+ */
+export const articles = mysqlTable("articles", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  titleEn: varchar("titleEn", { length: 255 }).notNull(),
+  titleAr: varchar("titleAr", { length: 255 }).notNull(),
+  contentEn: text("contentEn"),
+  contentAr: text("contentAr"),
+  excerptEn: text("excerptEn"),
+  excerptAr: text("excerptAr"),
+  authorId: int("authorId"),
+  sectionId: int("sectionId"),
+  featuredImageUrl: text("featuredImageUrl"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  crossTopicMatrix: json("crossTopicMatrix"),
+  isPublished: boolean("isPublished").default(false),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Article = typeof articles.$inferSelect;
+export type InsertArticle = typeof articles.$inferInsert;
+
+/**
+ * Reports table - for research and technical reports
+ */
+export const reports = mysqlTable("reports", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  titleEn: varchar("titleEn", { length: 255 }).notNull(),
+  titleAr: varchar("titleAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  contentEn: text("contentEn"),
+  contentAr: text("contentAr"),
+  authorId: int("authorId"),
+  sectionId: int("sectionId"),
+  fileUrl: text("fileUrl"),
+  coverImageUrl: text("coverImageUrl"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  requiresAuth: boolean("requiresAuth").default(false),
+  isPublished: boolean("isPublished").default(false),
+  publishedAt: timestamp("publishedAt"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Report = typeof reports.$inferSelect;
+export type InsertReport = typeof reports.$inferInsert;
+
+/**
+ * Processes (Methodology) table
+ */
+export const processes = mysqlTable("processes", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  nameEn: varchar("nameEn", { length: 255 }).notNull(),
+  nameAr: varchar("nameAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  stepsEn: json("stepsEn"),
+  stepsAr: json("stepsAr"),
+  sectionId: int("sectionId"),
+  authorId: int("authorId"),
+  diagramUrl: text("diagramUrl"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  isPublished: boolean("isPublished").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Process = typeof processes.$inferSelect;
+export type InsertProcess = typeof processes.$inferInsert;
+
+/**
+ * Techniques table
+ */
+export const techniques = mysqlTable("techniques", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  nameEn: varchar("nameEn", { length: 255 }).notNull(),
+  nameAr: varchar("nameAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  applicationEn: text("applicationEn"),
+  applicationAr: text("applicationAr"),
+  sectionId: int("sectionId"),
+  authorId: int("authorId"),
+  visualGuideUrl: text("visualGuideUrl"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  relatedProcessIds: json("relatedProcessIds"),
+  isPublished: boolean("isPublished").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Technique = typeof techniques.$inferSelect;
+export type InsertTechnique = typeof techniques.$inferInsert;
+
+/**
+ * Books/Publications table
+ */
+export const books = mysqlTable("books", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  titleEn: varchar("titleEn", { length: 255 }).notNull(),
+  titleAr: varchar("titleAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  authorEn: varchar("authorEn", { length: 255 }),
+  authorAr: varchar("authorAr", { length: 255 }),
+  publisherEn: varchar("publisherEn", { length: 255 }),
+  publisherAr: varchar("publisherAr", { length: 255 }),
+  publishedYear: int("publishedYear"),
+  sectionId: int("sectionId"),
+  coverImageUrl: text("coverImageUrl"),
+  downloadUrl: text("downloadUrl"),
+  externalLink: text("externalLink"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  isPublished: boolean("isPublished").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Book = typeof books.$inferSelect;
+export type InsertBook = typeof books.$inferInsert;
+
+/**
+ * Tools & Resources table
+ */
+export const tools = mysqlTable("tools", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  nameEn: varchar("nameEn", { length: 255 }).notNull(),
+  nameAr: varchar("nameAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  toolType: varchar("toolType", { length: 50 }),
+  sectionId: int("sectionId"),
+  authorId: int("authorId"),
+  downloadUrl: text("downloadUrl"),
+  externalLink: text("externalLink"),
+  previewImageUrl: text("previewImageUrl"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  requiresAuth: boolean("requiresAuth").default(false),
+  isPublished: boolean("isPublished").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Tool = typeof tools.$inferSelect;
+export type InsertTool = typeof tools.$inferInsert;
+
+/**
+ * Courses/Training Programs table
+ */
+export const courses = mysqlTable("courses", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  titleEn: varchar("titleEn", { length: 255 }).notNull(),
+  titleAr: varchar("titleAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  instructorId: int("instructorId"),
+  sectionId: int("sectionId"),
+  level: varchar("level", { length: 50 }),
+  duration: varchar("duration", { length: 50 }),
+  thumbnailUrl: text("thumbnailUrl"),
+  syllabus: json("syllabus"),
+  learningOutcomes: json("learningOutcomes"),
+  scientificTags: json("scientificTags"),
+  trustMetadata: json("trustMetadata"),
+  enrollmentUrl: text("enrollmentUrl"),
+  maxEnrollments: int("maxEnrollments"),
+  isPublished: boolean("isPublished").default(false),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Course = typeof courses.$inferSelect;
+export type InsertCourse = typeof courses.$inferInsert;
+
+/**
+ * Sections table - for the 12 functional sections
+ */
+export const sections = mysqlTable("sections", {
+  id: int("id").autoincrement().primaryKey(),
+  slug: varchar("slug", { length: 100 }).notNull().unique(),
+  nameEn: varchar("nameEn", { length: 255 }).notNull(),
+  nameAr: varchar("nameAr", { length: 255 }).notNull(),
+  descriptionEn: text("descriptionEn"),
+  descriptionAr: text("descriptionAr"),
+  iconUrl: text("iconUrl"),
+  order: int("order").default(0),
+  isCommerceGateway: boolean("isCommerceGateway").default(false),
+  externalLinks: json("externalLinks"),
+  isActive: boolean("isActive").default(true),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Section = typeof sections.$inferSelect;
+export type InsertSection = typeof sections.$inferInsert;
+
+/**
+ * Content-to-Content linking (Many-to-Many)
+ */
+export const contentLinks = mysqlTable("contentLinks", {
+  id: int("id").autoincrement().primaryKey(),
+  sourceType: varchar("sourceType", { length: 50 }).notNull(),
+  sourceId: int("sourceId").notNull(),
+  targetType: varchar("targetType", { length: 50 }).notNull(),
+  targetId: int("targetId").notNull(),
+  relationshipType: varchar("relationshipType", { length: 50 }),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ContentLink = typeof contentLinks.$inferSelect;
+export type InsertContentLink = typeof contentLinks.$inferInsert;
+
+/**
  * Site Settings table - for storing global configuration
  */
 export const siteSettings = mysqlTable("siteSettings", {

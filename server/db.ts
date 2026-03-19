@@ -1,6 +1,6 @@
 import { eq, and, desc, like, inArray, or } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, markets, products, brands, productCategories, blogPosts, statistics, locations, contactSubmissions } from "../drizzle/schema";
+import { InsertUser, users, markets, products, brands, productCategories, blogPosts, statistics, locations, contactSubmissions, articles, reports, processes, techniques, books, tools, courses, sections, contentLinks } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -261,4 +261,211 @@ export async function getSiteSetting(key: string) {
   if (!db) return null;
   const result = await db.select().from(require("../drizzle/schema").siteSettings).where(eq(require("../drizzle/schema").siteSettings.key, key)).limit(1);
   return result.length > 0 ? result[0] : null;
+}
+
+// Sections queries (v2.1)
+export async function getActiveSections() {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(sections).where(eq(sections.isActive, true)).orderBy(sections.order);
+}
+
+export async function getSectionBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(sections).where(eq(sections.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+// Articles queries (v2.1)
+export async function getPublishedArticles(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(articles).where(eq(articles.isPublished, true)).orderBy(desc(articles.publishedAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getArticleBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(articles).where(eq(articles.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getArticlesBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(articles).where(and(eq(articles.sectionId, sectionId), eq(articles.isPublished, true))).orderBy(desc(articles.publishedAt));
+}
+
+// Reports queries (v2.1)
+export async function getPublishedReports(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(reports).where(eq(reports.isPublished, true)).orderBy(desc(reports.publishedAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getReportBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(reports).where(eq(reports.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getReportsBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(reports).where(and(eq(reports.sectionId, sectionId), eq(reports.isPublished, true))).orderBy(desc(reports.publishedAt));
+}
+
+// Processes queries (v2.1)
+export async function getPublishedProcesses(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(processes).where(eq(processes.isPublished, true)).orderBy(desc(processes.createdAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getProcessBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(processes).where(eq(processes.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getProcessesBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(processes).where(and(eq(processes.sectionId, sectionId), eq(processes.isPublished, true))).orderBy(desc(processes.createdAt));
+}
+
+// Techniques queries (v2.1)
+export async function getPublishedTechniques(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(techniques).where(eq(techniques.isPublished, true)).orderBy(desc(techniques.createdAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getTechniqueBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(techniques).where(eq(techniques.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getTechniquesBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(techniques).where(and(eq(techniques.sectionId, sectionId), eq(techniques.isPublished, true))).orderBy(desc(techniques.createdAt));
+}
+
+// Books queries (v2.1)
+export async function getPublishedBooks(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(books).where(eq(books.isPublished, true)).orderBy(desc(books.publishedYear));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getBookBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(books).where(eq(books.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getBooksBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(books).where(and(eq(books.sectionId, sectionId), eq(books.isPublished, true))).orderBy(desc(books.publishedYear));
+}
+
+// Tools queries (v2.1)
+export async function getPublishedTools(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(tools).where(eq(tools.isPublished, true)).orderBy(desc(tools.createdAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getToolBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(tools).where(eq(tools.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getToolsBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(tools).where(and(eq(tools.sectionId, sectionId), eq(tools.isPublished, true))).orderBy(desc(tools.createdAt));
+}
+
+// Courses queries (v2.1)
+export async function getPublishedCourses(limit?: number) {
+  const db = await getDb();
+  if (!db) return [];
+  let query = db.select().from(courses).where(eq(courses.isPublished, true)).orderBy(desc(courses.createdAt));
+  if (limit) {
+    query = query.limit(limit) as any;
+  }
+  return query;
+}
+
+export async function getCourseBySlug(slug: string) {
+  const db = await getDb();
+  if (!db) return null;
+  const result = await db.select().from(courses).where(eq(courses.slug, slug)).limit(1);
+  return result.length > 0 ? result[0] : null;
+}
+
+export async function getCoursesBySection(sectionId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(courses).where(and(eq(courses.sectionId, sectionId), eq(courses.isPublished, true))).orderBy(desc(courses.createdAt));
+}
+
+// Content linking (v2.1)
+export async function getRelatedContent(sourceType: string, sourceId: number) {
+  const db = await getDb();
+  if (!db) return [];
+  return db.select().from(contentLinks).where(and(eq(contentLinks.sourceType, sourceType), eq(contentLinks.sourceId, sourceId)));
+}
+
+export async function linkContent(sourceType: string, sourceId: number, targetType: string, targetId: number, relationshipType?: string) {
+  const db = await getDb();
+  if (!db) return null;
+  try {
+    await db.insert(contentLinks).values({
+      sourceType,
+      sourceId,
+      targetType,
+      targetId,
+      relationshipType,
+    });
+    return true;
+  } catch (error) {
+    console.error("[Database] Link content error:", error);
+    return false;
+  }
 }

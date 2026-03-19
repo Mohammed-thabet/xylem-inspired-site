@@ -1,0 +1,9 @@
+{
+  "query": "-- Read and execute the migration file\n-- This will create all new tables for v2.1: articles, reports, processes, techniques, books, tools, courses, sections, and contentLinks",
+  "command": "mysql --batch --raw --column-names --default-character-set=utf8mb4 --host gateway04.us-east-1.prod.aws.tidbcloud.com --port 4000 --user 3TXZyBKTnznxyaE.root --database aZuFuGh9mWovGiZpowAffj --execute -- Read and execute the migration file\n-- This will create all new tables for v2.1: articles, reports, processes, techniques, books, tools, courses, sections, and contentLinks",
+  "rows": [],
+  "messages": [],
+  "stdout": "",
+  "stderr": "",
+  "execution_time_ms": 92
+}
