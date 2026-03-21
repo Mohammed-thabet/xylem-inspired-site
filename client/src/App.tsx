@@ -9,6 +9,7 @@ import ArticleDetail from "@/pages/ArticleDetail";
 import Products from "@/pages/Products";
 import SearchResults from "@/pages/SearchResults";
 import Contact from "@/pages/Contact";
+import CommerceGateway from "@/pages/CommerceGateway";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -27,6 +28,7 @@ function Router() {
       <Route path={"/markets/:slug"} component={MarketDetail} />
       <Route path={"/search"} component={SearchResults} />
       <Route path={"/contact"} component={Contact} />
+      <Route path={"/marketplace"} component={CommerceGateway} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />

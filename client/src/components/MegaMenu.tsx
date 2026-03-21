@@ -18,12 +18,20 @@ const sectionIcons: Record<string, React.ReactNode> = {
   marketplace: <Globe className="w-5 h-5" />,
 };
 
-// Mock sections data - will be replaced with tRPC query
+// All 12 sections with proper routing
 const mockSections = [
   { id: 1, slug: "intelligence", nameEn: "Water Intelligence", nameAr: "ذكاء المياه", descriptionEn: "Data-driven insights", descriptionAr: "رؤى قائمة على البيانات", isCommerceGateway: false },
   { id: 2, slug: "science-health", nameEn: "Science & Health", nameAr: "العلوم والصحة", descriptionEn: "Scientific research", descriptionAr: "البحث العلمي", isCommerceGateway: false },
   { id: 3, slug: "sustainability", nameEn: "Sustainability", nameAr: "الاستدامة", descriptionEn: "Environmental practices", descriptionAr: "ممارسات بيئية", isCommerceGateway: false },
-  { id: 12, slug: "marketplace", nameEn: "Marketplace Gateway", nameAr: "بوابة السوق", descriptionEn: "External marketplace", descriptionAr: "السوق الخارجية", isCommerceGateway: true, externalLinks: ["https://marketplace.example.com"] },
+  { id: 4, slug: "treatment", nameEn: "Water Treatment", nameAr: "معالجة المياه", descriptionEn: "Treatment solutions", descriptionAr: "حلول المعالجة", isCommerceGateway: false },
+  { id: 5, slug: "innovation", nameEn: "Innovation Lab", nameAr: "مختبر الابتكار", descriptionEn: "Cutting-edge research", descriptionAr: "أبحاث متقدمة", isCommerceGateway: false },
+  { id: 6, slug: "education", nameEn: "Education", nameAr: "التعليم", descriptionEn: "Training & courses", descriptionAr: "التدريب والدورات", isCommerceGateway: false },
+  { id: 7, slug: "policy", nameEn: "Policy & Advocacy", nameAr: "السياسة والدعوة", descriptionEn: "Policy insights", descriptionAr: "رؤى السياسة", isCommerceGateway: false },
+  { id: 8, slug: "community", nameEn: "Community", nameAr: "المجتمع", descriptionEn: "Community engagement", descriptionAr: "تفاعل المجتمع", isCommerceGateway: false },
+  { id: 9, slug: "technology", nameEn: "Technology", nameAr: "التكنولوجيا", descriptionEn: "Tech solutions", descriptionAr: "حلول تقنية", isCommerceGateway: false },
+  { id: 10, slug: "resources", nameEn: "Resources", nameAr: "الموارد", descriptionEn: "Learning materials", descriptionAr: "مواد التعلم", isCommerceGateway: false },
+  { id: 11, slug: "partnerships", nameEn: "Partnerships", nameAr: "الشراكات", descriptionEn: "Collaboration", descriptionAr: "التعاون", isCommerceGateway: false },
+  { id: 12, slug: "marketplace", nameEn: "Marketplace", nameAr: "السوق", descriptionEn: "External marketplace", descriptionAr: "السوق الخارجية", isCommerceGateway: true },
 ];
 
 export function MegaMenu() {
@@ -46,15 +54,17 @@ export function MegaMenu() {
           onMouseEnter={() => setOpenSection(section.slug)}
           onMouseLeave={() => setOpenSection(null)}
         >
-          <button
-            className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted ${
-              openSection === section.slug ? "bg-muted text-primary" : ""
-            }`}
-          >
-            {sectionIcons[section.slug]}
-            <span>{getLabel(section)}</span>
-            <ChevronDown className={`w-4 h-4 transition-transform ${openSection === section.slug ? "rotate-180" : ""}`} />
-          </button>
+          <Link href={`/sections/${section.slug}`}>
+            <button
+              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted ${
+                openSection === section.slug ? "bg-muted text-primary" : ""
+              }`}
+            >
+              {sectionIcons[section.slug]}
+              {getLabel(section)}
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </Link>
 
           {/* Mega Menu Dropdown */}
           {openSection === section.slug && (
@@ -73,18 +83,15 @@ export function MegaMenu() {
         </div>
       ))}
 
-      {/* Commerce Gateway - External Link */}
+      {/* Commerce Gateway - Link to Marketplace Page */}
       {commerceSection && (
-        <a
-          href={commerceSection.externalLinks?.[0] || "#"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted"
-        >
-          {sectionIcons[commerceSection.slug]}
-          <span>{getLabel(commerceSection)}</span>
-          <ChevronDown className="w-4 h-4" />
-        </a>
+        <Link href={`/sections/${commerceSection.slug}`}>
+          <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted">
+            {sectionIcons[commerceSection.slug]}
+            <span>{getLabel(commerceSection)}</span>
+            <ChevronDown className="w-4 h-4" />
+          </button>
+        </Link>
       )}
     </nav>
   );
