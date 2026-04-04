@@ -52,12 +52,13 @@ export default function ArticleDetail() {
       {/* Header */}
       <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-8">
         <div className="container max-w-4xl mx-auto px-4">
-          <Link href={`/${language}`}>
-            <a className="inline-flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity">
-              <ArrowLeft className="w-5 h-5" />
-              <span>{isArabic ? "العودة" : "Back"}</span>
-            </a>
-          </Link>
+          <button
+            onClick={() => window.location.href = `/${language}`}
+            className="inline-flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span>{isArabic ? "العودة" : "Back"}</span>
+          </button>
           <h1 className="text-4xl font-bold mb-4">{getLabel(article, "title")}</h1>
           <div className="flex flex-wrap items-center gap-4 text-sm opacity-90">
             <div className="flex items-center gap-2">
@@ -125,12 +126,13 @@ export default function ArticleDetail() {
                     ? "وصف مختصر للمقالة ذات الصلة"
                     : "Brief description of the related article"}
                 </p>
-                <Link href={`/${language}`}>
-                  <a className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors">
-                    {isArabic ? "اقرأ المزيد" : "Read More"}
-                    <span className={`${isArabic ? "rotate-180" : ""}`}>→</span>
-                  </a>
-                </Link>
+                <button
+                  onClick={() => window.location.href = `/${language}`}
+                  className="inline-flex items-center gap-2 text-primary hover:text-primary/80 font-medium transition-colors"
+                >
+                  {isArabic ? "اقرأ المزيد" : "Read More"}
+                  <span className={`${isArabic ? "rotate-180" : ""}`}>→</span>
+                </button>
               </div>
             ))}
           </div>

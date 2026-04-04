@@ -54,17 +54,16 @@ export function MegaMenu() {
           onMouseEnter={() => setOpenSection(section.slug)}
           onMouseLeave={() => setOpenSection(null)}
         >
-          <Link href={`/sections/${section.slug}`}>
-            <button
-              className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted ${
-                openSection === section.slug ? "bg-muted text-primary" : ""
-              }`}
-            >
-              {sectionIcons[section.slug]}
-              {getLabel(section)}
-              <ChevronDown className="w-4 h-4" />
-            </button>
-          </Link>
+          <button
+            onClick={() => window.location.href = `/${language}/sections/${section.slug}`}
+            className={`flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted ${
+              openSection === section.slug ? "bg-muted text-primary" : ""
+            }`}
+          >
+            {sectionIcons[section.slug]}
+            {getLabel(section)}
+            <ChevronDown className="w-4 h-4" />
+          </button>
 
           {/* Mega Menu Dropdown */}
           {openSection === section.slug && (
@@ -85,13 +84,14 @@ export function MegaMenu() {
 
       {/* Commerce Gateway - Link to Marketplace Page */}
       {commerceSection && (
-        <Link href={`/sections/${commerceSection.slug}`}>
-          <button className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted">
-            {sectionIcons[commerceSection.slug]}
-            <span>{getLabel(commerceSection)}</span>
-            <ChevronDown className="w-4 h-4" />
-          </button>
-        </Link>
+        <button
+          onClick={() => window.location.href = `/${language}/sections/${commerceSection.slug}`}
+          className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors rounded-md hover:bg-muted"
+        >
+          {sectionIcons[commerceSection.slug]}
+          <span>{getLabel(commerceSection)}</span>
+          <ChevronDown className="w-4 h-4" />
+        </button>
       )}
     </nav>
   );
