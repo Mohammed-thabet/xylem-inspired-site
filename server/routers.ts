@@ -20,7 +20,16 @@ import {
   getBlogPostsByCategory,
   getActiveStatistics,
   getActiveLocations,
-  createContactSubmission
+  createContactSubmission,
+  getActiveSections,
+  getSectionBySlug,
+  getArticlesBySection,
+  getReportsBySection,
+  getProcessesBySection,
+  getTechniquesBySection,
+  getBooksBySection,
+  getToolsBySection,
+  getCoursesBySection
 } from "./db";
 
 export const appRouter = router({
@@ -129,6 +138,40 @@ export const appRouter = router({
       .input(z.object({ category: z.string() }))
       .query(async ({ input }) => {
         return getBlogPostsByCategory(input.category);
+      }),
+  }),
+
+  // Sections procedures
+  sections: router({
+    list: publicProcedure.query(async () => {
+      return getActiveSections();
+    }),
+    getBySlug: publicProcedure
+      .input(z.object({ slug: z.string() }))
+      .query(async ({ input }) => {
+        return getSectionBySlug(input.slug);
+      }),
+    getContent: publicProcedure
+      .input(z.object({ sectionId: z.number() }))
+      .query(async ({ input }) => {
+        const [articles, reports, processes, techniques, books, tools, courses] = await Promise.all([
+          getArticlesBySection(input.sectionId),
+          getReportsBySection(input.sectionId),
+          getProcessesBySection(input.sectionId),
+          getTechniquesBySection(input.sectionId),
+          getBooksBySection(input.sectionId),
+          getToolsBySection(input.sectionId),
+          getCoursesBySection(input.sectionId),
+        ]);
+        return {
+          articles,
+          reports,
+          processes,
+          techniques,
+          books,
+          tools,
+          courses,
+        };
       }),
   }),
 
