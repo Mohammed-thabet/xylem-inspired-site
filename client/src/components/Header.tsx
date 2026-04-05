@@ -23,56 +23,56 @@ export default function Header({ language, onLanguageChange }: HeaderProps) {
     markets: {
       label: isArabic ? "الأسواق والتطبيقات" : "Markets & Applications",
       items: [
-        { label: isArabic ? "الزراعة" : "Agriculture", slug: "agriculture" },
-        { label: isArabic ? "الاستزراع السمكي" : "Aquaculture", slug: "aquaculture" },
-        { label: isArabic ? "المباني والمرافق" : "Buildings & Facilities", slug: "buildings" },
-        { label: isArabic ? "مراكز البيانات" : "Data Centers", slug: "data-centers" },
-        { label: isArabic ? "الطاقة والكهرباء" : "Energy & Power", slug: "energy" },
-        { label: isArabic ? "الصناعة العامة" : "General Industry", slug: "industry" },
+        { label: isArabic ? "الزراعة" : "Agriculture", slug: `/${language}/sections/marketplace` },
+        { label: isArabic ? "الاستزراع السمكي" : "Aquaculture", slug: `/${language}/sections/marketplace` },
+        { label: isArabic ? "المباني والمرافق" : "Buildings & Facilities", slug: `/${language}/sections/marketplace` },
+        { label: isArabic ? "مراكز البيانات" : "Data Centers", slug: `/${language}/sections/marketplace` },
+        { label: isArabic ? "الطاقة والكهرباء" : "Energy & Power", slug: `/${language}/sections/marketplace` },
+        { label: isArabic ? "الصناعة العامة" : "General Industry", slug: `/${language}/sections/marketplace` },
       ],
     },
     products: {
       label: isArabic ? "المنتجات والخدمات" : "Products & Services",
       items: [
-        { label: isArabic ? "أنظمة الضخ" : "Pumps & Systems", slug: "pumps" },
-        { label: isArabic ? "أنظمة التصفية" : "Filtration Systems", slug: "filtration" },
-        { label: isArabic ? "أنظمة المعالجة" : "Treatment Systems", slug: "treatment" },
-        { label: isArabic ? "أنظمة المراقبة" : "Monitoring Systems", slug: "monitoring" },
-        { label: isArabic ? "البرامج" : "Software", slug: "software" },
-        { label: isArabic ? "الخدمات" : "Services", slug: "services" },
+        { label: isArabic ? "أنظمة الضخ" : "Pumps & Systems", slug: `/${language}/products` },
+        { label: isArabic ? "أنظمة التصفية" : "Filtration Systems", slug: `/${language}/products` },
+        { label: isArabic ? "أنظمة المعالجة" : "Treatment Systems", slug: `/${language}/sections/treatment` },
+        { label: isArabic ? "أنظمة المراقبة" : "Monitoring Systems", slug: `/${language}/products` },
+        { label: isArabic ? "البرامج" : "Software", slug: `/${language}/products` },
+        { label: isArabic ? "الخدمات" : "Services", slug: `/${language}/products` },
       ],
     },
     brands: {
       label: isArabic ? "العلامات التجارية" : "Brands",
       items: [
-        { label: "Flygt", slug: "flygt" },
-        { label: "Lowara", slug: "lowara" },
-        { label: "Goulds", slug: "goulds" },
-        { label: "Jabsco", slug: "jabsco" },
-        { label: "Sanitaire", slug: "sanitaire" },
-        { label: "YSI", slug: "ysi" },
+        { label: "Flygt", slug: `/brands/flygt` },
+        { label: "Lowara", slug: `/brands/lowara` },
+        { label: "Goulds", slug: `/brands/goulds` },
+        { label: "Jabsco", slug: `/brands/jabsco` },
+        { label: "Sanitaire", slug: `/brands/sanitaire` },
+        { label: "YSI", slug: `/brands/ysi` },
       ],
     },
     resources: {
       label: isArabic ? "الموارد" : "Resources",
       items: [
-        { label: isArabic ? "المقالات" : "Articles", slug: "articles" },
-        { label: isArabic ? "المدونة" : "Blog", slug: "blog" },
-        { label: isArabic ? "دراسات الحالة" : "Case Studies", slug: "case-studies" },
-        { label: isArabic ? "الأسئلة الشائعة" : "FAQs", slug: "faqs" },
-        { label: isArabic ? "الندوات" : "Webinars", slug: "webinars" },
-        { label: isArabic ? "الأوراق البيضاء" : "White Papers", slug: "white-papers" },
+        { label: isArabic ? "المقالات" : "Articles", slug: `/${language}/sections/resources` },
+        { label: isArabic ? "المدونة" : "Blog", slug: `/${language}/blog` },
+        { label: isArabic ? "دراسات الحالة" : "Case Studies", slug: `/${language}/sections/resources` },
+        { label: isArabic ? "الأسئلة الشائعة" : "FAQs", slug: `/${language}/sections/resources` },
+        { label: isArabic ? "الندوات" : "Webinars", slug: `/${language}/sections/resources` },
+        { label: isArabic ? "الأوراق البيضاء" : "White Papers", slug: `/${language}/sections/resources` },
       ],
     },
     about: {
       label: isArabic ? "حول الشركة" : "About",
       items: [
-        { label: isArabic ? "نبذة عن الشركة" : "About Us", slug: "about" },
-        { label: isArabic ? "الوظائف" : "Careers", slug: "careers" },
-        { label: isArabic ? "المستثمرون" : "Investors", slug: "investors" },
-        { label: isArabic ? "غرفة الأخبار" : "Newsroom", slug: "newsroom" },
-        { label: isArabic ? "الاستدامة" : "Sustainability", slug: "sustainability" },
-        { label: isArabic ? "المسؤولية الاجتماعية" : "CSR", slug: "csr" },
+        { label: isArabic ? "نبذة عن الشركة" : "About Us", slug: `/${language}/sections/partnerships` },
+        { label: isArabic ? "الوظائف" : "Careers", slug: `/${language}/sections/community` },
+        { label: isArabic ? "المستثمرون" : "Investors", slug: `/${language}/sections/policy` },
+        { label: isArabic ? "غرفة الأخبار" : "Newsroom", slug: `/${language}/blog` },
+        { label: isArabic ? "الاستدامة" : "Sustainability", slug: `/${language}/sections/sustainability` },
+        { label: isArabic ? "المسؤولية الاجتماعية" : "CSR", slug: `/${language}/sections/sustainability` },
       ],
     },
   };
@@ -113,7 +113,7 @@ export default function Header({ language, onLanguageChange }: HeaderProps) {
                 <div className="absolute top-full left-0 hidden group-hover:block w-64 bg-background border border-border rounded-lg shadow-elegant-lg p-4 mt-2">
                   <div className="space-y-2">
                     {menu.items.map((item) => (
-                      <Link key={item.slug} href={`/${item.slug}`}>
+                      <Link key={item.slug} href={item.slug}>
                         <a className="block px-3 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-lg transition-elegant">
                           {item.label}
                         </a>
@@ -191,7 +191,7 @@ export default function Header({ language, onLanguageChange }: HeaderProps) {
                 {activeMegaMenu === key && (
                   <div className="ml-4 space-y-1 mt-2">
                     {menu.items.map((item) => (
-                      <Link key={item.slug} href={`/${item.slug}`}>
+                      <Link key={item.slug} href={item.slug}>
                         <a className="block px-4 py-2 text-sm text-foreground hover:text-primary hover:bg-muted rounded-lg transition-elegant">
                           {item.label}
                         </a>

@@ -10,6 +10,7 @@ import Products from "@/pages/Products";
 import SearchResults from "@/pages/SearchResults";
 import Contact from "@/pages/Contact";
 import CommerceGateway from "@/pages/CommerceGateway";
+import BrandDetail from "@/pages/BrandDetail";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -29,6 +30,8 @@ function Router() {
       <Route path={"/:lang/products"} component={Products} />
       <Route path={"/products/:slug"} component={ProductDetail} />
       <Route path={"/:lang/product/:slug"} component={ProductDetail} />
+      <Route path={"/brands/:slug"} component={BrandDetail} />
+      <Route path={"/:lang/brands/:slug"} component={BrandDetail} />
       <Route path={"/blog"} component={Blog} />
       <Route path={"/blog/:slug"} component={BlogDetail} />
       <Route path={"/markets/:slug"} component={MarketDetail} />
