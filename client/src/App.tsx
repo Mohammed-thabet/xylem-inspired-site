@@ -14,6 +14,7 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
+import Blog from "./pages/Blog";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -22,8 +23,13 @@ function Router() {
       <Route path={"/"} component={Home} />
       <Route path={"/:lang/sections/:slug"} component={SectionDetail} />
       <Route path={"/:lang/article/:slug"} component={ArticleDetail} />
+      <Route path={"/:lang/blog"} component={Blog} />
+      <Route path={"/:lang/blog/:slug"} component={BlogDetail} />
       <Route path={"/products"} component={Products} />
+      <Route path={"/:lang/products"} component={Products} />
       <Route path={"/products/:slug"} component={ProductDetail} />
+      <Route path={"/:lang/product/:slug"} component={ProductDetail} />
+      <Route path={"/blog"} component={Blog} />
       <Route path={"/blog/:slug"} component={BlogDetail} />
       <Route path={"/markets/:slug"} component={MarketDetail} />
       <Route path={"/search"} component={SearchResults} />
